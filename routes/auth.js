@@ -41,6 +41,7 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('ERREUR LOGIN COMPLETE:', error);
     res.status(500).json({ message: 'Erreur lors de la connexion', erreur: error.message });
   }
 });

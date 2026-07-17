@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
     const [dossiers] = await db.query(`
       SELECT d.*, u.nom, u.prenom, u.matricule 
       FROM dossiers d
-      JOIN utilisateurs u ON d.id_usager = u.id
+      JOIN usagers u ON d.id_usager = u.id
       ORDER BY d.date_depot DESC
     `);
     res.json(dossiers);
@@ -54,7 +54,7 @@ router.get('/:id', async (req, res) => {
     const [dossiers] = await db.query(`
       SELECT d.*, u.nom, u.prenom, u.matricule
       FROM dossiers d
-      JOIN utilisateurs u ON d.id_usager = u.id
+      JOIN usagers u ON d.id_usager = u.id
       WHERE d.id = ?
     `, [id]);
 
@@ -71,6 +71,7 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la récupération du dossier', erreur: error.message });
   }
 });
+
 
 // PUT modifier un dossier
 router.put('/:id', async (req, res) => {
@@ -89,6 +90,7 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la mise à jour du dossier', erreur: error.message });
   }
 });
+
 
 // POST upload de l'acte PDF pour un dossier
 router.post('/:id/upload-acte', upload.single('acte'), async (req, res) => {
